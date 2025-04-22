@@ -22,6 +22,8 @@
 
  //By Wesley @ 2022.01.05
 #include "../Share/fmtlib.h"
+#include "boost/asio/io_context.hpp"
+#include "boost/asio/post.hpp"
 template<typename... Args>
 inline void write_log(ITraderSpi* sink, WTSLogLevel ll, const char* format, const Args&... args)
 {
@@ -80,7 +82,8 @@ TraderFemas::TraderFemas()
 	, m_bQryOnline(false)
 	, m_uLocalOrdID(1)
 	, m_bInQuery(false)
-	, m_strandIO(NULL)
+	, m_asyncIO()
+	, m_strandIO(m_asyncIO.get_executor())
 	, m_lastQryTime(0)
 {
 }
@@ -196,8 +199,8 @@ void TraderFemas::connect()
 
 	if (m_thrdWorker == NULL)
 	{
-		m_strandIO = new boost::asio::io_service::strand(m_asyncIO);
-		boost::asio::io_service::work work(m_asyncIO);
+		// todo: maybe fault
+		// boost::asio::io_context::work work(m_asyncIO);
 		m_thrdWorker.reset(new StdThread([this](){
 			while (true)
 			{
@@ -211,9 +214,12 @@ void TraderFemas::connect()
 
 void TraderFemas::disconnect()
 {
-	m_asyncIO.post([this](){
-		release();
-	});
+	boost::asio::post(
+		m_asyncIO,
+		[this]{
+			release();
+		}
+	);
 }
 
 bool TraderFemas::makeEntrustID(char* buffer, int length)
@@ -1148,7 +1154,9 @@ const char* TraderFemas::wrapExchg(const char* exchg)
 
 void TraderFemas::triggerQuery()
 {
-	m_strandIO->post([this](){
+	boost::asio::post(
+		m_strandIO,
+		[this](){
 		if (m_queQuery.empty() || m_bInQuery)
 			return;
 
@@ -1156,8 +1164,10 @@ void TraderFemas::triggerQuery()
 		if (curTime - m_lastQryTime < 1000)
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
-			m_strandIO->post([this](){
-				triggerQuery();
+			boost::asio::post(
+				m_strandIO,
+				[this](){
+					triggerQuery();
 			});
 			return;
 		}

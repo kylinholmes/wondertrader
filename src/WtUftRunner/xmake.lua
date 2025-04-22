@@ -5,16 +5,8 @@ target("WtUftRunner")
     set_languages("cxx17")
     add_files("*.cpp")
     add_headerfiles("*.h")
-    add_includedirs("$(INCS)")
-    add_linkdirs("$(LNKS)")
-
-    add_links("WtUftCore", "WTSTools", "WTSUtils")
-
-    if is_plat("windows") then
-        add_syslinks("ws2_32")
-    elseif is_plat("linux") then
-        add_links("dl", "pthread", "boost_filesystem", "boost_thread")
-    end
+    add_packages("boost", {configs = {filesystem = true}})
+    add_deps("WtUftCore", "WTSTools", "WTSUtils")
 
     after_build(function (target)
         os.mkdir(path.join(target:targetdir(), "parsers"))

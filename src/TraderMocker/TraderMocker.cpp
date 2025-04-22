@@ -10,6 +10,8 @@
 #include "../Share/TimeUtils.hpp"
 #include "../Share/decimal.h"
 #include "../Share/StrUtil.hpp"
+#include "boost/asio/ip/address.hpp"
+#include "boost/asio/post.hpp"
 
 #include <boost/bind.hpp>
 #include <boost/filesystem.hpp>
@@ -143,7 +145,9 @@ int TraderMocker::orderInsert(WTSEntrust* entrust)
 	}
 
 	entrust->retain();
-	_io_service.post([this, entrust](){
+	boost::asio::post(
+		_io_service,
+		[this, entrust](){
 		StdUniqueLock lock(_mutex_api);
 
 		WTSContractInfo* ct = entrust->getContractInfo();
@@ -525,7 +529,7 @@ bool TraderMocker::init(WTSVariant *params)
 
 	_udp_port = params->getInt32("udp_port");
 
-	boost::asio::ip::address addr = boost::asio::ip::address::from_string("0.0.0.0");
+	boost::asio::ip::address addr = boost::asio::ip::make_address("0.0.0.0");
 	_broad_ep = boost::asio::ip::udp::endpoint(addr, _udp_port);
 
 	if (decimal::eq(_max_qty, 0))
@@ -690,9 +694,11 @@ void TraderMocker::connect()
 {
 	reconn_udp();
 
-	_thrd_worker.reset(new StdThread(boost::bind(&boost::asio::io_service::run, &_io_service)));
+	_thrd_worker.reset(new StdThread(boost::bind(&boost::asio::io_context::run, &_io_service)));
 
-	_io_service.post([this](){
+	boost::asio::post(
+		_io_service,
+		[this](){
 		StdUniqueLock lock(_mutex_api);
 
 		load_positions();
@@ -732,7 +738,8 @@ int TraderMocker::login(const char* user, const char* pass, const char* productI
 		}
 	}));
 
-	_io_service.post([this](){
+		boost::asio::post(
+		_io_service,[this](){
 		StdUniqueLock lock(_mutex_api);
 
 		if (_listener)
@@ -751,7 +758,8 @@ int TraderMocker::orderAction(WTSEntrustAction* action)
 {
 	action->retain();
 	
-	_io_service.post([this, action](){
+		boost::asio::post(
+		_io_service,[this, action](){
 		StdUniqueLock lck(_mtx_awaits);	//一定要把awaits锁起来,不然可能会导致一边撮合一边撤单
 		WTSOrderInfo* ordInfo = (WTSOrderInfo*)_awaits->grab(action->getOrderID());
 
@@ -829,7 +837,8 @@ int TraderMocker::orderAction(WTSEntrustAction* action)
 
 int TraderMocker::queryAccount()
 {
-	_io_service.post([this](){
+		boost::asio::post(
+		_io_service,[this](){
 		WTSArray* ay = WTSArray::create();
 		WTSAccountInfo* accountInfo = WTSAccountInfo::create();
 		accountInfo->setCurrency("CNY");
@@ -861,7 +870,8 @@ int TraderMocker::queryAccount()
 
 int TraderMocker::queryPositions()
 {
-	_io_service.post([this](){
+		boost::asio::post(
+		_io_service,[this](){
 		WTSArray* ayPos = WTSArray::create();
 
 		for(auto& v : _positions)
@@ -910,7 +920,8 @@ int TraderMocker::queryPositions()
 
 int TraderMocker::queryOrders()
 {
-	_io_service.post([this](){
+		boost::asio::post(
+		_io_service,[this](){
 		StdUniqueLock lock(_mutex_api);
 
 		if (_listener)
@@ -922,7 +933,8 @@ int TraderMocker::queryOrders()
 
 int TraderMocker::queryTrades()
 {
-	_io_service.post([this](){
+		boost::asio::post(
+		_io_service,[this](){
 		StdUniqueLock lock(_mutex_api);
 
 		if (_listener)

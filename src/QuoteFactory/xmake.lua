@@ -4,21 +4,13 @@ target("QuoteFactory")
     set_kind("binary")
     set_languages("cxx17")
     add_files("*.cpp")
-    add_includedirs("$(INCS)")
-    add_linkdirs("$(LNKS)")
+    add_packages("boost")
 
     if is_plat("windows") then
         add_files("../Common/mdump.cpp")
-        add_syslinks("ws2_32")
-    elseif is_plat("linux") then
-        add_links("dl", "boost_filesystem", "boost_thread", "pthread")
     end
 
-    add_links("WTSTools", "WTSUtils", "WtDtCore")
-
-    if is_mode("release") then
-        add_ldflags("-s")
-    end
+    add_deps("WTSTools", "WTSUtils", "WtDtCore")
 
     after_build(function (target)
         os.mkdir(path.join(target:targetdir(), "parsers"))

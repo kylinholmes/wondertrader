@@ -1544,7 +1544,7 @@ WTSKlineSlice* WtDataReader::readKlineSlice(const char* stdCode, WTSKlinePeriod 
 	const char* stdPID = cInfo.stdCommID();
 
 	thread_local static char key[64] = { 0 };
-	fmtutil::format_to(key, "{}#{}", stdCode, period);
+	fmtutil::format_to(key, "{}#{}", stdCode, static_cast<int>(period));
 	auto it = _bars_cache.find(key);
 	bool bHasHisData = false;
 	if (it == _bars_cache.end())
@@ -1761,10 +1761,10 @@ WTSKlineSlice* WtDataReader::readKlineSlice(const char* stdCode, WTSKlinePeriod 
 WtDataReader::TickBlockPair* WtDataReader::getRTTickBlock(const char* exchg, const char* code)
 {
 	thread_local static char key[64] = { 0 };
-	fmtutil::format_to(key, "{}#{}", exchg, code);
+	fmt::format(key, "{}#{}", exchg, code);
 
 	thread_local static char path[256] = { 0 };
-	fmtutil::format_to(path, "{}ticks/{}/{}.dmb", _rt_dir.c_str(), exchg, code);
+	fmt::format(path, "{}ticks/{}/{}.dmb", _rt_dir.c_str(), exchg, code);
 
 	if (!StdFile::exists(path))
 		return NULL;
@@ -1803,10 +1803,10 @@ WtDataReader::TickBlockPair* WtDataReader::getRTTickBlock(const char* exchg, con
 WtDataReader::OrdDtlBlockPair* WtDataReader::getRTOrdDtlBlock(const char* exchg, const char* code)
 {
 	thread_local static char key[64] = { 0 };
-	fmtutil::format_to(key, "{}#{}", exchg, code);
+	fmt::format(key, "{}#{}", exchg, code);
 
 	thread_local static char path[256] = { 0 };
-	fmtutil::format_to(path, "{}orders/{}/{}.dmb", _rt_dir.c_str(), exchg, code);
+	fmt::format(path, "{}orders/{}/{}.dmb", _rt_dir.c_str(), exchg, code);
 
 	if (!StdFile::exists(path))
 		return NULL;
@@ -1845,10 +1845,10 @@ WtDataReader::OrdDtlBlockPair* WtDataReader::getRTOrdDtlBlock(const char* exchg,
 WtDataReader::OrdQueBlockPair* WtDataReader::getRTOrdQueBlock(const char* exchg, const char* code)
 {
 	thread_local static char key[64] = { 0 };
-	fmtutil::format_to(key, "{}#{}", exchg, code);
+	fmt::format(key, "{}#{}", exchg, code);
 
 	thread_local static char path[256] = { 0 };
-	fmtutil::format_to(path, "{}queue/{}/{}.dmb", _rt_dir.c_str(), exchg, code);
+	fmt::format(path, "{}queue/{}/{}.dmb", _rt_dir.c_str(), exchg, code);
 
 	if (!StdFile::exists(path))
 		return NULL;
@@ -1887,10 +1887,10 @@ WtDataReader::OrdQueBlockPair* WtDataReader::getRTOrdQueBlock(const char* exchg,
 WtDataReader::TransBlockPair* WtDataReader::getRTTransBlock(const char* exchg, const char* code)
 {
 	thread_local static char key[64] = { 0 };
-	fmtutil::format_to(key, "{}#{}", exchg, code);
+	fmt::format(key, "{}#{}", exchg, code);
 
 	thread_local static char path[256] = { 0 };
-	fmtutil::format_to(path, "{}trans/{}/{}.dmb", _rt_dir.c_str(), exchg, code);
+	fmt::format(path, "{}trans/{}/{}.dmb", _rt_dir.c_str(), exchg, code);
 
 	if (!StdFile::exists(path))
 		return NULL;
@@ -1932,7 +1932,7 @@ WtDataReader::RTKlineBlockPair* WtDataReader::getRTKilneBlock(const char* exchg,
 		return NULL;
 
 	thread_local static char key[64] = { 0 };
-	fmtutil::format_to(key, "{}.{}", exchg, code);
+	fmt::format(key, "{}.{}", exchg, code);
 
 	RTKBlockFilesMap* cache_map = NULL;
 	std::string subdir = "";
@@ -1953,7 +1953,7 @@ WtDataReader::RTKlineBlockPair* WtDataReader::getRTKilneBlock(const char* exchg,
 	}
 
 	thread_local static char path[256] = { 0 };
-	fmtutil::format_to(path, "{}{}/{}/{}.dmb", _rt_dir, subdir, exchg, code);
+	fmt::format(path, "{}{}/{}/{}.dmb", _rt_dir, subdir, exchg, code);
 
 	if (!StdFile::exists(path))
 		return NULL;
@@ -2134,7 +2134,7 @@ double WtDataReader::getAdjFactorByDate(const char* stdCode, uint32_t date /* = 
 const WtDataReader::AdjFactorList& WtDataReader::getAdjFactors(const char* code, const char* exchg, const char* pid)
 {
 	thread_local static char key[20] = { 0 };
-	fmtutil::format_to(key, "{}.{}.{}", exchg, pid, code);
+	fmt::format(key, "{}.{}.{}", exchg, pid, code);
 
 	auto it = _adj_factors.find(key);
 	if (it == _adj_factors.end())

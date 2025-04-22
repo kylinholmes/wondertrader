@@ -49,6 +49,12 @@ void MQManager::log_server(WtUInt32 id, const char* message)
 		_cb_log(id, message, true);
 }
 
+void MQManager::log_client(WtUInt32 id, std::string message)
+{
+	if (_cb_log)
+		_cb_log(id, message.c_str(), false);
+}
+
 void MQManager::log_client(WtUInt32 id, const char* message)
 {
 	if (_cb_log)

@@ -12,6 +12,7 @@
 #include "WTSTypes.h"
 #include "WTSObject.hpp"
 #include "WTSCollection.hpp"
+#include "fmt/format.h"
 
 #include <string>
 #include <string.h>
@@ -64,8 +65,7 @@ private:
 	{
 		WTSVariant* ret = new WTSVariant();
 		ret->_type = VT_Int32;
-		char s[32] = { 0 };
-		sprintf(s, "%d", i32);
+		auto s = fmt::format("{}", i32);
 		ret->_value._string = new std::string(s);
 		return ret;
 	}
@@ -74,8 +74,7 @@ private:
 	{
 		WTSVariant* ret = new WTSVariant();
 		ret->_type = VT_Uint32;
-		char s[32] = { 0 };
-		sprintf(s, "%u", u32);
+		auto s = fmt::format("{}", u32);
 		ret->_value._string = new std::string(s);
 		return ret;
 	}
@@ -84,8 +83,7 @@ private:
 	{
 		WTSVariant* ret = new WTSVariant();
 		ret->_type = VT_Int64;
-		char s[32] = { 0 };
-		sprintf(s, INT64_FMT, i64);
+		auto s = fmt::format("{}", i64);
 		ret->_value._string = new std::string(s);
 		return ret;
 	}
@@ -94,8 +92,8 @@ private:
 	{
 		WTSVariant* ret = new WTSVariant();
 		ret->_type = VT_Uint64;
-		char s[32] = { 0 };
-		sprintf(s, UINT64_FMT, u64);
+		// char s[32] = { 0 };
+		auto s = fmt::format("{}", u64);
 		ret->_value._string = new std::string(s);
 		return ret;
 	}
@@ -104,8 +102,9 @@ private:
 	{
 		WTSVariant* ret = new WTSVariant();
 		ret->_type = VT_Real;
-		char s[32] = { 0 };
-		sprintf(s, "%.10f", _real);
+		// char s[32] = { 0 };
+		// sprintf(s, "%.10f", _real);
+		auto s = fmt::format("{.10}", _real);
 		ret->_value._string = new std::string(s);
 		return ret;
 	}

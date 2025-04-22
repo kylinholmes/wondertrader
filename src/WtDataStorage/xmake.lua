@@ -5,16 +5,5 @@ target("WtDataStorage")
     set_languages("cxx17")
     add_files("*.cpp")
     add_headerfiles("*.h")
-    add_includedirs("$(INCS)")
-    add_linkdirs("$(LNKS)")
-
-    add_links("WTSUtils")
-
-    if is_plat("linux") then
-        add_links("dl", "pthread", "boost_filesystem")
-        if is_mode("release") then
-            add_ldflags("-s")
-        end
-        set_symbols("hidden")
-        add_cxflags("-fvisibility=hidden", "-fvisibility-inlines-hidden")
-    end
+    add_packages("boost")
+    add_deps("WTSUtils")

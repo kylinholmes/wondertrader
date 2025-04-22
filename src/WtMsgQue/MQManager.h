@@ -41,6 +41,7 @@ public:
 	void		start_client(WtUInt32 id);
 
 	void		log_server(WtUInt32 id, const char* message);
+	void		log_client(WtUInt32 id, std::string message);
 	void		log_client(WtUInt32 id, const char* message);
 
 private:

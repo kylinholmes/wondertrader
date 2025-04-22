@@ -1568,7 +1568,7 @@ void WtDataWriter::transHisData(const char* sid)
 			}
 		}
 
-		_proc_que.push(fmtutil::format("MARK.{}", sid));
+		_proc_que.push(fmt::format("MARK.{}", sid));
 	}
 	else
 	{
@@ -1872,7 +1872,7 @@ bool WtDataWriter::dump_day_data(WTSContractInfo* ct, WTSBarStruct* newBar)
 	ss << _base_dir << "his/day/" << ct->getExchg() << "/";
 	std::string path = ss.str();
 	BoostFile::create_directories(ss.str().c_str());
-	std::string filename = fmtutil::format("{}{}.dsb", path, ct->getCode());
+	std::string filename = fmt::format("{}{}.dsb", path, ct->getCode());
 
 	bool bNew = false;
 	if (!BoostFile::exists(filename.c_str()))
@@ -1970,7 +1970,7 @@ uint32_t WtDataWriter::dump_bars_to_file(WTSContractInfo* ct)
 	if (ct == NULL)
 		return 0;
 
-	std::string key = fmtutil::format("{}.{}", ct->getExchg(), ct->getCode());
+	std::string key = fmt::format("{}.{}", ct->getExchg(), ct->getCode());
 
 	uint32_t count = 0;
 
@@ -2017,7 +2017,7 @@ uint32_t WtDataWriter::dump_bars_to_file(WTSContractInfo* ct)
 			BoostFile::create_directories(ss.str().c_str());
 			std::string path = ss.str();
 			BoostFile::create_directories(ss.str().c_str());
-			std::string filename = fmtutil::format("{}{}.dsb", path, ct->getCode());
+			std::string filename = fmt::format("{}{}.dsb", path, ct->getCode());
 
 			bool bNew = false;
 			if (!BoostFile::exists(filename.c_str()))
@@ -2084,7 +2084,7 @@ uint32_t WtDataWriter::dump_bars_to_file(WTSContractInfo* ct)
 			BoostFile::create_directories(ss.str().c_str());
 			std::string path = ss.str();
 			BoostFile::create_directories(ss.str().c_str());
-			std::string filename = fmtutil::format("{}{}.dsb", path.c_str(), ct->getCode());
+			std::string filename = fmt::format("{}{}.dsb", path.c_str(), ct->getCode());
 
 			bool bNew = false;
 			if (!BoostFile::exists(filename.c_str()))
@@ -2204,7 +2204,7 @@ void WtDataWriter::proc_loop()
 					pipe_writer_log(_sink, LL_WARN, "{}[{}] expired, cache will be cleared", ay[1].c_str(), ay[0].c_str());
 
 					//删除已经过期代码的实时tick文件
-					std::string path = fmtutil::format("{}rt/ticks/{}/{}.dmb", _base_dir, ay[0], ay[1]);
+					std::string path = fmt::format("{}rt/ticks/{}/{}.dmb", _base_dir, ay[0], ay[1]);
 					BoostFile::delete_file(path.c_str());
 				}
 			}
@@ -2289,17 +2289,17 @@ void WtDataWriter::proc_loop()
 				try_count++;
 				try
 				{
-					std::string path = fmtutil::format("{}rt/min1/", _base_dir);
+					std::string path = fmt::format("{}rt/min1/", _base_dir);
 					boost::filesystem::remove_all(boost::filesystem::path(path));
-					path = fmtutil::format("{}rt/min5/", _base_dir);
+					path = fmt::format("{}rt/min5/", _base_dir);
 					boost::filesystem::remove_all(boost::filesystem::path(path));
-					path = fmtutil::format("{}rt/ticks/", _base_dir);
+					path = fmt::format("{}rt/ticks/", _base_dir);
 					boost::filesystem::remove_all(boost::filesystem::path(path));
-					path = fmtutil::format("{}rt/orders/", _base_dir);
+					path = fmt::format("{}rt/orders/", _base_dir);
 					boost::filesystem::remove_all(boost::filesystem::path(path));
-					path = fmtutil::format("{}rt/queue/", _base_dir);
+					path = fmt::format("{}rt/queue/", _base_dir);
 					boost::filesystem::remove_all(boost::filesystem::path(path));
-					path = fmtutil::format("{}rt/trans/", _base_dir);
+					path = fmt::format("{}rt/trans/", _base_dir);
 					boost::filesystem::remove_all(boost::filesystem::path(path));
 					break;
 				}
@@ -2371,7 +2371,7 @@ void WtDataWriter::proc_loop()
 							std::string path = ss.str();
 							pipe_writer_log(_sink, LL_INFO, path.c_str());
 							BoostFile::create_directories(ss.str().c_str());
-							std::string filename = fmtutil::format("{}{}.dsb", path, code);
+							std::string filename = fmt::format("{}{}.dsb", path, code);
 
 							bool bNew = false;
 							if (!BoostFile::exists(filename.c_str()))
@@ -2438,7 +2438,7 @@ void WtDataWriter::proc_loop()
 						std::string path = ss.str();
 						pipe_writer_log(_sink, LL_INFO, path.c_str());
 						BoostFile::create_directories(ss.str().c_str());
-						std::string filename = fmtutil::format("{}{}.dsb", path, code);
+						std::string filename = fmt::format("{}{}.dsb", path, code);
 
 						bool bNew = false;
 						if (!BoostFile::exists(filename.c_str()))
@@ -2504,7 +2504,7 @@ void WtDataWriter::proc_loop()
 						std::string path = ss.str();
 						pipe_writer_log(_sink, LL_INFO, path.c_str());
 						BoostFile::create_directories(ss.str().c_str());
-						std::string filename = fmtutil::format("{}{}.dsb", path, code);
+						std::string filename = fmt::format("{}{}.dsb", path, code);
 
 						bool bNew = false;
 						if (!BoostFile::exists(filename.c_str()))
@@ -2570,7 +2570,7 @@ void WtDataWriter::proc_loop()
 						std::string path = ss.str();
 						pipe_writer_log(_sink, LL_INFO, path.c_str());
 						BoostFile::create_directories(ss.str().c_str());
-						std::string filename = fmtutil::format("{}{}.dsb", path, code);
+						std::string filename = fmt::format("{}{}.dsb", path, code);
 
 						bool bNew = false;
 						if (!BoostFile::exists(filename.c_str()))

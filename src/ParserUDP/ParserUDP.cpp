@@ -15,6 +15,8 @@
 
  //By Wesley @ 2022.01.05
 #include "../Share/fmtlib.h"
+#include "boost/asio/ip/address.hpp"
+#include "boost/asio/post.hpp"
 template<typename... Args>
 inline void write_log(IParserSpi* sink, WTSLogLevel ll, const char* format, const Args&... args)
 {
@@ -81,7 +83,7 @@ extern "C"
 ParserUDP::ParserUDP()
 	: _b_socket(NULL)
 	, _s_socket(NULL)
-	, _strand(_io_service)
+	, _strand(_io_service.get_executor())
 	, _stopped(false)
 	, _sink(NULL)
 	, _connecting(false)
@@ -103,7 +105,7 @@ bool ParserUDP::init( WTSVariant* config )
 	if (_gpsize == 0)
 		_gpsize = 1000;
 
-	ip::address addr = ip::address::from_string(_hots);
+	ip::address addr = ip::make_address(_hots);
 	_server_ep = ip::udp::endpoint(addr, _sport);
 
 	_broad_ep = ip::udp::endpoint(ip::address_v4::any(), _bport);
@@ -245,7 +247,7 @@ bool ParserUDP::connect()
 {
 	if(reconnect(3))
 	{
-		_thrd_parser.reset(new StdThread(boost::bind(&io_service::run, &_io_service)));
+		_thrd_parser.reset(new StdThread(boost::bind(&io_context::run, &_io_service)));
 	}
 	else
 	{
@@ -265,7 +267,10 @@ bool ParserUDP::disconnect()
 	}
 
 	_stopped = true;
-	_strand.post(boost::bind(&ParserUDP::doOnDisconnected, this));
+	boost::asio::post(
+		_strand,
+		boost::bind(&ParserUDP::doOnDisconnected, this)
+	);
 
 	return true;
 }

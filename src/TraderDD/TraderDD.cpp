@@ -473,8 +473,8 @@ void TraderDD::connect()
 {
 	if (m_thrdWorker == NULL)
 	{
-		m_strandIO = new boost::asio::io_service::strand(m_asyncIO);
-		boost::asio::io_service::work work(m_asyncIO);
+		m_strandIO = new boost::asio::io_context::strand(m_asyncIO);
+		boost::asio::io_context::work work(m_asyncIO);
 		m_thrdWorker.reset(new StdThread([this]() {
 			while (true)
 			{

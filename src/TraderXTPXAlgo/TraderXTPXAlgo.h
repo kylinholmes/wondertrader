@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <stdint.h>
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 
 #include "../API/XTPXAlgo/include/xtp_trader_api.h"
 
@@ -229,9 +229,9 @@ private:
 	std::atomic<uint32_t>		_reqid;
 	std::atomic<uint32_t>		_ordref;		//报单引用
 
-	boost::asio::io_service		_asyncio;
+	boost::asio::io_context		_asyncio;
 	StdThreadPtr				_thrd_worker;
-	typedef std::shared_ptr<boost::asio::io_service::work> BoostWorkerPtr;
+	typedef std::shared_ptr<boost::asio::io_context::work> BoostWorkerPtr;
 	BoostWorkerPtr				_worker;
 
 	DllHandle		m_hInstXTP;

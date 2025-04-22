@@ -280,7 +280,7 @@ void WtHftEngine::on_tick(const char* stdCode, WTSTickData* curTick)
 void WtHftEngine::on_bar(const char* stdCode, const char* period, uint32_t times, WTSBarStruct* newBar)
 {
 	thread_local static char key[64] = { 0 };
-	fmtutil::format_to(key, "{}-{}-{}", stdCode, period, times);
+	fmt::format(key, "{}-{}-{}", stdCode, period, times);
 
 	const SubList& sids = _bar_sub_map[key];
 	for (auto it = sids.begin(); it != sids.end(); it++)

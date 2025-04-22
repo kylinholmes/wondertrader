@@ -21,6 +21,8 @@
 
  //By Wesley @ 2022.01.05
 #include "../Share/fmtlib.h"
+#include "boost/asio/executor_work_guard.hpp"
+#include "boost/asio/post.hpp"
 template<typename... Args>
 inline void write_log(IParserSpi* sink, WTSLogLevel ll, const char* format, const Args&... args)
 {
@@ -143,8 +145,8 @@ bool ParserXTP::connect()
 
 	if (_thrd_worker == NULL)
 	{
-		//boost::asio::io_service::work work(_asyncio);
-		_worker.reset(new boost::asio::io_service::work(_asyncio));
+		//boost::asio::io_context::work work(_asyncio);
+		_worker.reset(new boost::asio::executor_work_guard<boost::asio::io_context::executor_type>(_asyncio.get_executor()));
 		_thrd_worker.reset(new StdThread([this]() {
 			while (true)
 			{
@@ -186,7 +188,9 @@ void ParserXTP::OnDisconnected(int nReason)
 		m_sink->handleEvent(WPE_Close, 0);
 	}
 
-	_asyncio.post([this]() {
+	boost::asio::post(
+		_asyncio, 
+		[this]() {
 		write_log(m_sink, LL_WARN, "[ParserXTP] Connection lost, relogin in 2 seconds...");
 		std::this_thread::sleep_for(std::chrono::seconds(2));
 		DoLogin();
@@ -455,7 +459,9 @@ void ParserXTP::DoLogin()
 			auto error_info = m_pUserAPI->GetApiLastError();
 			if(iResult == -1)
 			{
-				_asyncio.post([this, iResult] {
+				boost::asio::post(
+			_asyncio, 
+			[this, iResult] {
 					m_sink->handleEvent(WPE_Connect, iResult);
 				});
 
@@ -464,7 +470,9 @@ void ParserXTP::DoLogin()
 			else
 			{
 				m_sink->handleEvent(WPE_Connect, 0);
-				_asyncio.post([this, iResult] {
+				boost::asio::post(
+			_asyncio, 
+			[this, iResult] {
 					m_sink->handleEvent(WPE_Connect, 0);
 				});
 
@@ -475,7 +483,9 @@ void ParserXTP::DoLogin()
 	else
 	{
 		m_uTradingDate = strToTime(m_pUserAPI->GetTradingDay());
-		_asyncio.post([this] {
+			boost::asio::post(
+		_asyncio,
+		[this] {
 			if (m_sink)
 			{
 				m_sink->handleEvent(WPE_Connect, 0);

@@ -5,14 +5,4 @@ target("WtCtaStraFact")
     set_languages("cxx17")
     add_files("*.cpp")
     add_headerfiles("*.h")
-    add_includedirs("$(INCS)")
-    add_linkdirs("$(LNKS)")
-
-    if is_plat("linux") then
-        add_links("boost_filesystem", "dl")
-        if is_mode("release") then
-            add_ldflags("-s")
-        end
-        set_symbols("hidden")
-        add_cxflags("-fvisibility=hidden", "-fvisibility-inlines-hidden")
-    end
+    add_packages("boost")

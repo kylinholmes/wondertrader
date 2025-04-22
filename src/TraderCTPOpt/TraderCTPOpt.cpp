@@ -228,7 +228,7 @@ TraderCTPOpt::TraderCTPOpt()
 	, m_optSink(NULL)
 	, m_bscSink(NULL)
 	, m_bInQuery(false)
-	, m_bStopped(NULL)
+	, m_bStopped(false)
 	, m_lastQryTime(0)
 {
 }

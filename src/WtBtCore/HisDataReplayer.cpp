@@ -973,7 +973,7 @@ void HisDataReplayer::run_by_tasks(bool bNeedDump /* = false */)
 					}
 					uint32_t preWD = TimeUtils::getWeekDay(preTDate);
 
-					switch (_task->_period)
+					switch (static_cast<int>(_task->_period))
 					{
 					case TPT_Daily:
 						fired = true;

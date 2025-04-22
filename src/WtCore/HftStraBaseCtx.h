@@ -178,7 +178,7 @@ protected:
 	template<typename... Args>
 	void log_debug(const char* format, const Args& ...args)
 	{
-		const char* buffer = fmtutil::format(format, args...);
+		const char* buffer = fmt::format(format, args...);
 		stra_log_debug(buffer);
 	}
 

@@ -8,6 +8,7 @@
  * \brief 
  */
 #include "ParserXeleSkt.h"
+#include "boost/asio/ip/address.hpp"
 #include "md_struct.h"
 #include "../Includes/WTSVariant.hpp"
 #include "../Includes/WTSDataDef.hpp"
@@ -81,7 +82,7 @@ extern "C"
 
 ParserXeleSkt::ParserXeleSkt()
 	: _udp_socket(NULL)
-	, _strand(_io_service)
+	, _strand(_io_service.get_executor())
 	, _stopped(false)
 	, _sink(NULL)
 	, _prepared(false)
@@ -105,10 +106,10 @@ bool ParserXeleSkt::init( WTSVariant* config )
 	if (_gpsize == 0)
 		_gpsize = 1000;
 
-	ip::address addr = ip::address::from_string(_tcp_host);
+	ip::address addr = ip::make_address(_tcp_host);
 	_tcp_ep = ip::tcp::endpoint(addr, _tcp_port);
 
-	addr = ip::address::from_string("0.0.0.0");
+	addr = ip::make_address("0.0.0.0");
 	_mcast_ep = ip::udp::endpoint(addr, _mcast_port);
 
 	return true;
@@ -264,7 +265,7 @@ bool ParserXeleSkt::connect()
 {
 	if(reconnect())
 	{
-		_thrd_parser.reset(new StdThread(boost::bind(&io_service::run, &_io_service)));
+		_thrd_parser.reset(new StdThread(boost::bind(&io_context::run, &_io_service)));
 	}
 	else
 	{
@@ -284,7 +285,10 @@ bool ParserXeleSkt::disconnect()
 	}
 
 	_stopped = true;
-	_strand.post(boost::bind(&ParserXeleSkt::doOnDisconnected, this));
+	boost::asio::post(
+		_strand,
+		boost::bind(&ParserXeleSkt::doOnDisconnected, this)
+	);
 
 	return true;
 }

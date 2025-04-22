@@ -22,7 +22,8 @@ public:
 		DWORD_PTR mask = SetThreadAffinityMask(hThread, (DWORD_PTR)(1 << i));
 		return (mask != 0);
 	}
-#else
+#endif
+#ifdef __linux__
 #include <pthread.h>
 #include <sched.h>
 #include <unistd.h>
@@ -39,4 +40,10 @@ public:
 		return (pthread_setaffinity_np(pthread_self(), sizeof(mask), &mask) >= 0);
 	}
 #endif
+#ifdef __APPLE__
+static bool bind_core(uint32_t i) {
+	return true;
+}
+#endif
+
 };

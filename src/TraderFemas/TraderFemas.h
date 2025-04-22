@@ -19,7 +19,7 @@
 #include <stdint.h>
 #include <atomic>
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/strand.hpp>
 
 #include "../Includes/WTSTypes.h"
@@ -65,38 +65,38 @@ private:
 //////////////////////////////////////////////////////////////////////////
 //ITraderApi接口
 public:
-	virtual bool init(WTSVariant* params);
+	virtual bool init(WTSVariant* params) override;
 
-	virtual void release();
+	virtual void release() override;
 
 	virtual void setTag(const char* tag){m_strTag = tag;}
 	virtual const char* getTag(){return m_strTag.c_str();}
 
-	virtual void registerSpi( ITraderSpi *listener );
+	virtual void registerSpi( ITraderSpi *listener ) override;
 
-	virtual bool makeEntrustID(char* buffer, int length);
+	virtual bool makeEntrustID(char* buffer, int length) override;
 
-	virtual void connect();
+	virtual void connect() override;
 
-	virtual void disconnect();
+	virtual void disconnect() override;
 
-	virtual bool isConnected();
+	virtual bool isConnected() override;
 
-	virtual int login(const char* user, const char* pass, const char* productInfo);
+	virtual int login(const char* user, const char* pass, const char* productInfo) override;
 
-	virtual int logout();
+	virtual int logout() override;
 
-	virtual int orderInsert(WTSEntrust* eutrust);
+	virtual int orderInsert(WTSEntrust* eutrust) override;;
 
-	virtual int orderAction(WTSEntrustAction* action);
+	virtual int orderAction(WTSEntrustAction* action) override;;
 
-	virtual int queryAccount();
+	virtual int queryAccount() override;;
 
-	virtual int queryPositions();
+	virtual int queryPositions() override;;
 
-	virtual int queryOrders();
+	virtual int queryOrders() override;;
 
-	virtual int queryTrades();
+	virtual int queryTrades() override;;
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -226,8 +226,9 @@ protected:
 	bool						m_bQryOnline;
 	bool						m_bStopped;
 
-	boost::asio::io_service		m_asyncIO;
-	boost::asio::io_service::strand*	m_strandIO;
+
+	boost::asio::io_context		m_asyncIO;
+	boost::asio::strand<boost::asio::io_context::executor_type>	m_strandIO;
 	StdThreadPtr				m_thrdWorker;
 
 	typedef std::queue<CommonExecuter>	QueryQue;

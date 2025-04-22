@@ -250,7 +250,7 @@ OrderIDs WtArbiExecuter::cancel(const char* stdCode, bool isBuy, double qty)
 void WtArbiExecuter::writeLog(const char* message)
 {
 	static thread_local char szBuf[2048] = { 0 };
-	fmtutil::format_to(szBuf, "[{}]", _name.c_str());
+	fmt::format(szBuf, "[{}]", _name.c_str());
 	strcat(szBuf, message);
 	WTSLogger::log_dyn_raw("executer", _name.c_str(), LL_INFO, szBuf);
 }
@@ -622,7 +622,7 @@ void WtArbiExecuter::on_position(const char* stdCode, bool isLong, double prevol
 	WTSLogger::log_dyn("executer", _name.c_str(), LL_INFO, "Prev hot contract of {}.{} on {} is {}", cInfo._exchg, cInfo._product, tradingday, prevCode);
 
 	thread_local static char fullPid[64] = { 0 };
-	fmtutil::format_to(fullPid, "{}.{}", cInfo._exchg, cInfo._product);
+	fmt::format(fullPid, "{}.{}", cInfo._exchg, cInfo._product);
 
 	//先检查排除列表
 	//如果在排除列表中，则直接退出
