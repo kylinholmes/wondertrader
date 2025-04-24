@@ -18,6 +18,7 @@
 #include "Includes/WTSVersion.h"
 
 #include "ModuleHelper.hpp"
+#include "boost/asio/post.hpp"
 
 #include <boost/filesystem.hpp>
 #include <iostream>
@@ -631,8 +632,9 @@ void TraderATP::OnRspOrderStatusInternalAck(const ATPRspOrderStatusAckMsg& order
 			//	_sink->onPushOrder(orderInfo);
 
 			//orderInfo->release();
-
-			_asyncio.post([this, orderInfo] {
+			boost::asio::post(
+				_asyncio,
+				[this, orderInfo] {
 				if (_sink)
 					_sink->onPushOrder(orderInfo);
 
@@ -687,7 +689,8 @@ void TraderATP::OnRspOrderStatusAck(const ATPRspOrderStatusAckMsg& order_status_
 
 			//orderInfo->release();
 
-			_asyncio.post([this, orderInfo] {
+			boost::asio::post(
+				_asyncio,[this, orderInfo] {
 				if (_sink)
 					_sink->onPushOrder(orderInfo);
 
@@ -710,7 +713,8 @@ void TraderATP::OnRspCashAuctionTradeER(const ATPRspCashAuctionTradeERMsg& cash_
 	WTSTradeInfo *tRecord = makeTradeRecord(&cash_auction_trade_er);
 	if (tRecord)
 	{
-		_asyncio.post([this, tRecord] {
+		boost::asio::post(
+				_asyncio,[this, tRecord] {
 			if (_sink)
 				_sink->onPushTrade(tRecord);
 
@@ -761,14 +765,16 @@ void TraderATP::OnRspOrderQueryResult(const ATPRspOrderQueryResultMsg &msg)
 		if (ordInfo == NULL)
 			continue;
 
-		_asyncio.post([this, ordInfo] {
+		boost::asio::post(
+				_asyncio,[this, ordInfo] {
 			ayOrders->append(ordInfo, false);
 		});
 	}
 
 	if ((msg.last_index + 1) == msg.total_num)  // 查询完毕
 	{
-		_asyncio.post([this] {
+		boost::asio::post(
+				_asyncio,[this] {
 			if (_sink)
 				_sink->onRspOrders(ayOrders);
 
@@ -792,7 +798,8 @@ void TraderATP::OnRspTradeOrderQueryResult(const ATPRspTradeOrderQueryResultMsg 
 		if (trdInfo == NULL)
 			continue;
 
-		_asyncio.post([this, trdInfo] {
+		boost::asio::post(
+				_asyncio,[this, trdInfo] {
 			ayTrades->append(trdInfo, false);
 		});
 	}
@@ -819,7 +826,8 @@ void TraderATP::OnRspTradeOrderQueryResult(const ATPRspTradeOrderQueryResultMsg 
 
 	if ((msg.last_index + 1) == msg.total_num)  // 查询完毕
 	{
-		_asyncio.post([this] {
+		boost::asio::post(
+				_asyncio,[this] {
 			if (_sink)
 				_sink->onRspTrades(ayTrades);
 
@@ -875,7 +883,8 @@ void TraderATP::OnRspShareQueryResult(const ATPRspShareQueryResultMsg &msg)
 
 	if ((msg.last_index + 1) == msg.total_num)  // 查询完毕
 	{
-		_asyncio.post([this] {
+		boost::asio::post(
+				_asyncio,[this] {
 			WTSArray* ayPos = WTSArray::create();
 
 			if (_positions && _positions->size() > 0)
@@ -1284,7 +1293,8 @@ int TraderATP::queryAccount()
 
 int TraderATP::queryPositions()
 {
-	_asyncio.post([this]() {
+	boost::asio::post(
+				_asyncio,[this]() {
 		{
 			ATPReqShareQueryMsg p;
 			strncpy(p.cust_id, _cust_id.c_str(), 17);
@@ -1337,7 +1347,8 @@ int TraderATP::queryPositions()
 
 int TraderATP::queryOrders()
 {
-	_asyncio.post([this]() {
+	boost::asio::post(
+				_asyncio,[this]() {
 		{
 			ATPReqOrderQueryMsg p;
 			strncpy(p.cust_id, _cust_id.c_str(), 17);
@@ -1387,7 +1398,8 @@ int TraderATP::queryOrders()
 
 int TraderATP::queryTrades()
 {
-	_asyncio.post([this]() {
+	boost::asio::post(
+				_asyncio,[this]() {
 		{
 			ATPReqTradeOrderQueryMsg p;
 			strncpy(p.cust_id, _cust_id.c_str(), 17);

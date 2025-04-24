@@ -308,7 +308,8 @@ void TraderHuaX::OnFrontDisconnected(int nReason)
 		_sink->handleEvent(WTE_Close, nReason);
 
 	_state = TS_NOTLOGIN;
-	//_asyncio.post([this](){
+	//boost::asio::post(
+				_asyncio,[this](){
 	//	write_log(_sink, LL_WARN, "[TraderHuaX] Connection lost, relogin in 2 seconds...");
 	//	std::this_thread::sleep_for(std::chrono::seconds(2));
 	//	reconnect();
@@ -585,7 +586,8 @@ void TraderHuaX::OnRspQryShareholderAccount(CTORATstpShareholderAccountField* pS
 			write_log(_sink, LL_INFO, "[TraderHuaX] [{}] Login succeed, trading date: {}...", _user.c_str(), _tradingday);
 
 			_inited = true;
-			_asyncio.post([this] {
+			boost::asio::post(
+				_asyncio,[this] {
 				_sink->onLoginResult(true, 0, _tradingday);
 				_state = TS_ALLREADY;
 			});
@@ -816,7 +818,8 @@ void TraderHuaX::doLogin()
 		write_log(_sink, LL_ERROR, "[TraderHuaX] Login failed: error code {}", erro_code);
 		
 		_state = TS_LOGINFAILED;
-		_asyncio.post([this, erro_code]{
+		boost::asio::post(
+				_asyncio,[this, erro_code]{
 			_sink->onLoginResult(false, erro_code.c_str(), 0);
 		});
 	}
