@@ -18,7 +18,7 @@ inline void pipe_btreader_log(IBtDtReaderSink* sink, WTSLogLevel ll, const char*
 
 	static thread_local char buffer[512] = { 0 };
 	memset(buffer, 0, 512);
-	fmt::format(buffer, format, args...);
+	fmtutil::format_to(buffer, format, args...);
 
 	sink->reader_log(ll, buffer);
 }

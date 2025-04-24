@@ -29,6 +29,7 @@
 
 namespace boost { namespace threadpool { namespace detail 
 {
+	using namespace boost::placeholders;
 
   /*! \brief Thread pool worker. 
   *

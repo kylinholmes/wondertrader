@@ -4,7 +4,7 @@ add_rules("mode.debug", "mode.release")
 set_languages("cxx17")
 -- set_warnings("all", "error")
 add_requires(
-    "boost[thread,filesystem,asio,system,shared,all]",
+    "boost[all]{configs={shared=false}}",
     "rapidjson",
     "nanomsg",
     "nlopt",
@@ -26,9 +26,8 @@ if is_plat("windows") then
         add_links("ws2_32")
     end
 elseif is_plat("linux") then
-    add_cxflags("-fPIC")
+    add_cxflags("-fPIC","-fvisibility=hidden", "-fvisibility-inlines-hidden")
     set_symbols("hidden")
-    add_cxflags("-fvisibility=hidden", "-fvisibility-inlines-hidden")
     add_links("dl", "pthread", "rt") -- Linux 平台特定库
     if is_mode("release") then
         add_ldflags("-s")
@@ -36,7 +35,10 @@ elseif is_plat("linux") then
 end
 
 
-includes("WTSUtils", "WTSTools", "CTPLoader", "CTPOptLoader", "LoaderRunner", 
+includes(
+    "base",
+    -- "WTSUtils", "WTSTools", 
+    "CTPLoader", "CTPOptLoader", "LoaderRunner", 
          "ParserCTP", "ParserCTPMini", "ParserCTPOpt", "ParserFemas", "ParserXTP", 
          "ParserShm", "ParserXeleSkt", "WtDataStorage", "WtDataStorageAD", "WtDtCore", 
          "WtDtHelper", "WtDtPorter", "WtDtServo", "QuoteFactory", "WtBtCore", 

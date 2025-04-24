@@ -250,7 +250,7 @@ OrderIDs WtArbiExecuter::cancel(const char* stdCode, bool isBuy, double qty)
 void WtArbiExecuter::writeLog(const char* message)
 {
 	static thread_local char szBuf[2048] = { 0 };
-	fmt::format(szBuf, "[{}]", _name.c_str());
+	fmtutil::format_to(szBuf, "[{}]", _name.c_str());
 	strcat(szBuf, message);
 	WTSLogger::log_dyn_raw("executer", _name.c_str(), LL_INFO, szBuf);
 }

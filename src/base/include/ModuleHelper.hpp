@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../Share/StrUtil.hpp"
+#include "StrUtil.hpp"
 
 #ifdef _MSC_VER
 #include <wtypes.h>

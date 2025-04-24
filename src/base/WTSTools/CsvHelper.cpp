@@ -2,7 +2,7 @@
 
 #include <limits.h>
 
-#include "../Share/StdUtils.hpp"
+#include "StdUtils.hpp"
 #include "../Share/StrUtil.hpp"
 
 CsvReader::CsvReader(const char* item_splitter /* = "," */)
