@@ -1418,9 +1418,9 @@ int TraderATP::queryTrades()
 			{
 				write_log(_sink, LL_ERROR, "[TraderATP][{}] Query trades failed: {}", _acctid, ec);
 			}
-			write_log(_sink, LL_INFO, "return num: {}", _return_nums);
+			write_log(_sink, LL_INFO, "return num: {}", _return_nums.load());
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
-			write_log(_sink, LL_INFO, "return num: {}", _return_nums);
+			write_log(_sink, LL_INFO, "return num: {}", _return_nums.load());
 
 			if (_return_nums > 100)
 			{
