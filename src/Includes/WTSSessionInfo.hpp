@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "WTSObject.hpp"
-#include "../Share/TimeUtils.hpp"
+#include "TimeUtils.hpp"
 
 NS_WTP_BEGIN
 

@@ -8,15 +8,15 @@
  * \brief 
  */
 #include "WTSBaseDataMgr.h"
-#include "../WTSUtils/WTSCfgLoader.h"
+#include "base/WTSUtils/WTSCfgLoader.h"
 #include "WTSLogger.h"
 
-#include "../Includes/WTSContractInfo.hpp"
-#include "../Includes/WTSSessionInfo.hpp"
-#include "../Includes/WTSVariant.hpp"
+#include "Includes/WTSContractInfo.hpp"
+#include "Includes/WTSSessionInfo.hpp"
+#include "Includes/WTSVariant.hpp"
 
-#include "../Share/StrUtil.hpp"
-#include "../Share/StdUtils.hpp"
+#include "StrUtil.hpp"
+#include "StdUtils.hpp"
 
 const char* DEFAULT_HOLIDAY_TPL = "CHINA";
 

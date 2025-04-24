@@ -33,7 +33,7 @@
 #define _SPK_GLOBAL_PACKET_H
 
 
-#include    <sutil/types.h>
+#include    "../types.h"
 
 
 #ifdef __cplusplus

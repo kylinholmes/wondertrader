@@ -8,19 +8,19 @@
  * /brief 
  */
 #include "UftLatencyTool.h"
-#include "../WtUftCore/UftStraContext.h"
+#include "UltraFT/WtUftCore/UftStraContext.h"
 
-#include "../Includes/WTSVariant.hpp"
-#include "../Includes/IParserApi.h"
-#include "../Includes/ITraderApi.h"
-#include "../Includes/WTSContractInfo.hpp"
+#include "Includes/WTSVariant.hpp"
+#include "Includes/IParserApi.h"
+#include "Includes/ITraderApi.h"
+#include "Includes/WTSContractInfo.hpp"
 
-#include "../WTSTools/WTSLogger.h"
-#include "../WTSUtils/WTSCfgLoader.h"
+#include "base/WTSTools/WTSLogger.h"
+#include "base/WTSUtils/WTSCfgLoader.h"
 
-#include "../Share/StrUtil.hpp"
-#include "../Share/TimeUtils.hpp"
-#include "../Share/CpuHelper.hpp"
+#include "StrUtil.hpp"
+#include "TimeUtils.hpp"
+#include "CpuHelper.hpp"
 
 
 USING_NS_WTP;

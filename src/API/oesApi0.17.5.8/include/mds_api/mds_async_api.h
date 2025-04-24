@@ -76,7 +76,7 @@
 #define _MDS_ASYNC_API_H
 
 
-#include    <mds_api/mds_api.h>
+#include    "mds_api.h"
 #include    <sutil/net/spk_general_endpoint_define.h>
 
 

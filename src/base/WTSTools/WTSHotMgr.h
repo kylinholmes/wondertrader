@@ -8,9 +8,9 @@
  * \brief 主力合约管理器实现
  */
 #pragma once
-#include "../Includes/IHotMgr.h"
-#include "../Includes/FasterDefs.h"
-#include "../Includes/WTSCollection.hpp"
+#include "Includes/IHotMgr.h"
+#include "Includes/FasterDefs.h"
+#include "Includes/WTSCollection.hpp"
 #include <string>
 
 NS_WTP_BEGIN

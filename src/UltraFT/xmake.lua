@@ -1,0 +1,5 @@
+includes(
+    "WtUftCore",
+    "WtUftRunner",
+    "WtUftStraFact"
+)

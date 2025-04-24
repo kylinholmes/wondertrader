@@ -189,9 +189,9 @@
 #define _MDS_API_H
 
 
-#include    <mds_global/mds_base_model.h>
-#include    <mds_global/mds_mkt_packets.h>
-#include    <mds_api/errors/mds_errors.h>
+#include    "../mds_global/mds_base_model.h"
+#include    "../mds_global/mds_mkt_packets.h"
+#include    "../mds_api/errors/mds_errors.h"
 #include    <sutil/net/spk_general_client_define.h>
 #include    <sutil/platform/spk_platforms.h>
 

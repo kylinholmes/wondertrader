@@ -11,7 +11,7 @@
 #include <string>
 #include <stdint.h>
 
-#include "../WTSUtils/zstdlib/zstd.h"
+#include "base/WTSUtils/zstdlib/zstd.h"
 
 class WTSCmpHelper
 {

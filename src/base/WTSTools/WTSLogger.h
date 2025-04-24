@@ -8,9 +8,9 @@
  * \brief 日志模块定义
  */
 #pragma once
-#include "../Includes/WTSTypes.h"
-#include "../Includes/WTSCollection.hpp"
-#include "../Share/fmtlib.h"
+#include "Includes/WTSTypes.h"
+#include "Includes/WTSCollection.hpp"
+#include "fmtlib.h"
 
 #include <memory>
 #include <sstream>

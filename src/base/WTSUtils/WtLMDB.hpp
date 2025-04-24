@@ -14,7 +14,7 @@
 #include <sys/stat.h>
 #endif
 
-#include "../Includes/WTSMarcos.h"
+#include "Includes/WTSMarcos.h"
 #include "lmdb/lmdb.h"
 
 NS_WTP_BEGIN

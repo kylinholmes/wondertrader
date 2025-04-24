@@ -54,7 +54,7 @@
 #define _MDS_PROTOCOL_ERRORS_H
 
 
-#include    <sutil/net/spk_errmsg_base_define.h>
+#include    "../../sutil/net/spk_errmsg_base_define.h"
 
 
 #ifdef __cplusplus

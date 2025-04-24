@@ -8,16 +8,16 @@
  * \brief 
  */
 #include "WTSHotMgr.h"
-#include "../WTSUtils/WTSCfgLoader.h"
+#include "base/WTSUtils/WTSCfgLoader.h"
 
-#include "../Includes/WTSSwitchItem.hpp"
-#include "../Includes/WTSVariant.hpp"
+#include "Includes/WTSSwitchItem.hpp"
+#include "Includes/WTSVariant.hpp"
 
-#include "../Share/StrUtil.hpp"
-#include "../Share/TimeUtils.hpp"
-#include "../Share/CodeHelper.hpp"
-#include "../Share/StdUtils.hpp"
-#include "../Share/decimal.h"
+#include "StrUtil.hpp"
+#include "TimeUtils.hpp"
+#include "CodeHelper.hpp"
+#include "StdUtils.hpp"
+#include "decimal.h"
 
 
 WTSHotMgr::WTSHotMgr()

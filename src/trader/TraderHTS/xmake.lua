@@ -1,0 +1,10 @@
+add_rules("mode.debug", "mode.release")
+
+target("TraderHTS")
+    set_kind("shared")
+    set_languages("cxx17")
+    add_files("TraderHTS.cpp")
+
+    if is_plat("linux") then
+        add_links("FixApi/libfixapi.so")
+    end

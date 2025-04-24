@@ -17,12 +17,12 @@
 #endif
 
 #include "WTSLogger.h"
-#include "../WTSUtils/WTSCfgLoader.h"
-#include "../Includes/ILogHandler.h"
-#include "../Includes/WTSVariant.hpp"
-#include "../Share/StdUtils.hpp"
-#include "../Share/StrUtil.hpp"
-#include "../Share/TimeUtils.hpp"
+#include "base/WTSUtils/WTSCfgLoader.h"
+#include "Includes/ILogHandler.h"
+#include "Includes/WTSVariant.hpp"
+#include "StdUtils.hpp"
+#include "StrUtil.hpp"
+#include "TimeUtils.hpp"
 
 #include <boost/filesystem.hpp>
 

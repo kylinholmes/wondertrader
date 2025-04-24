@@ -8,10 +8,10 @@
  * \brief 
  */
 #include "WTSDataFactory.h"
-#include "../Includes/WTSDataDef.hpp"
-#include "../Includes/WTSContractInfo.hpp"
-#include "../Includes/WTSSessionInfo.hpp"
-#include "../Share/TimeUtils.hpp"
+#include "Includes/WTSDataDef.hpp"
+#include "Includes/WTSContractInfo.hpp"
+#include "Includes/WTSSessionInfo.hpp"
+#include "TimeUtils.hpp"
 
 using namespace std;
 

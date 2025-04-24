@@ -10,8 +10,8 @@
 #pragma once
 #include <stdint.h>
 
-#include "../Includes/WTSMarcos.h"
-#include "../Includes/WTSTypes.h"
+#include "Includes/WTSMarcos.h"
+#include "Includes/WTSTypes.h"
 
 NS_WTP_BEGIN
 class WTSKlineSlice;

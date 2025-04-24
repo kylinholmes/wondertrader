@@ -8,7 +8,7 @@
  * /brief 
  */
 
-#include "../WTSTools/WTSLogger.h"
+#include "base/WTSTools/WTSLogger.h"
 
 extern void test_uft();
 

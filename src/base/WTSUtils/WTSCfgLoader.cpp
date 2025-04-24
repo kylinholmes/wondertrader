@@ -1,10 +1,10 @@
 ﻿#include "WTSCfgLoader.h"
-#include "../Share/StrUtil.hpp"
-#include "../Share/StdUtils.hpp"
+#include "StrUtil.hpp"
+#include "StdUtils.hpp"
 
-#include "../Share/charconv.hpp"
+#include "charconv.hpp"
 
-#include "../Includes/WTSVariant.hpp"
+#include "Includes/WTSVariant.hpp"
 #include <rapidjson/document.h>
 namespace rj = rapidjson;
 
@@ -125,7 +125,7 @@ WTSVariant* WTSCfgLoader::load_from_json(const char* content)
 	return ret;
 }
 
-#include "../WTSUtils/yamlcpp/yaml.h"
+#include "base/WTSUtils/yamlcpp/yaml.h"
 bool yaml_to_variant(const YAML::Node& root, WTSVariant* params)
 {
 	if (root.IsNull() && params->type() != WTSVariant::VT_Object)

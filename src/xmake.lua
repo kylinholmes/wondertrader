@@ -13,6 +13,7 @@ add_requires(
 )
 add_packages("boost", "spdlog", "rapidjson", "nanomsg", "nlopt", "fmt")
 add_cxflags("-Wno-deprecated-declarations")
+add_includedirs("Includes","./","base/include","API/*/include", {public = true})
 
 
 
@@ -36,17 +37,32 @@ end
 
 
 includes(
-    "base",
+    "base",     
     -- "WTSUtils", "WTSTools", 
+    "backtest",         
+    --  "WtBtCore", "WtBtPorter", "WtBtRunner", 
+    "data",
+    --  "WtDataStorage", "WtDataStorageAD", "WtDtCore", 
+    --  "WtDtHelper", "WtDtPorter", "WtDtServo", "QuoteFactory", 
+    "quotation",
+    --  "ParserCTP", "ParserCTPMini", "ParserCTPOpt", "ParserFemas", "ParserXTP", 
+    --  "ParserShm", "ParserXeleSkt", "ParserUDP", 
+    "plugin",
+    -- "WtCtaStraFact", "WtRiskMonFact", "WtExeFact", "WtHftStraFact", "WtSelStraFact",
+    "product",
+    --  "WtCore", "WtPorter", "WtExecMon", "WtRunner", 
+    "trader",
+    -- "TraderCTPOpt", "TraderFemas", "TraderMocker", "TraderXTP", "TraderYD", 
+    -- "TraderDumper", "TraderCTP", "TraderCTPMini", 
+    "UltraFT",
+    -- "WtUftCore", "WtUftStraFact", "WtUftRunner",
+
+    
+
     "CTPLoader", "CTPOptLoader", "LoaderRunner", 
-         "ParserCTP", "ParserCTPMini", "ParserCTPOpt", "ParserFemas", "ParserXTP", 
-         "ParserShm", "ParserXeleSkt", "WtDataStorage", "WtDataStorageAD", "WtDtCore", 
-         "WtDtHelper", "WtDtPorter", "WtDtServo", "QuoteFactory", "WtBtCore", 
-         "WtBtPorter", "WtBtRunner", "ParserUDP", "TraderCTP", "TraderCTPMini", 
-         "TraderCTPOpt", "TraderFemas", "TraderMocker", "TraderXTP", "TraderYD", 
-         "WtExeFact", "WtRiskMonFact", "WtMsgQue", "WtCore", "WtPorter", "WtExecMon", 
-         "WtRunner", "TraderDumper", "WtShareHelper", "WtUftCore", "WtUftStraFact", 
-         "WtUftRunner", "WtLatencyHFT", "WtLatencyUFT"
-        --  ,"TestBtPorter", "TestDtPorter", 
-        --  "TestExecPorter", "TestPorter", "TestTrader", "TestParser", "TestUnits"
-        )
+        "WtShareHelper", 
+        "WtMsgQue", 
+         "WtLatencyHFT", "WtLatencyUFT"
+    --  ,"TestBtPorter", "TestDtPorter", 
+    --  "TestExecPorter", "TestPorter", "TestTrader", "TestParser", "TestUnits"
+    )

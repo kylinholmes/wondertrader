@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../Includes/WTSMarcos.h"
+#include "Includes/WTSMarcos.h"
 
 #include <string>
 

@@ -11,7 +11,7 @@
 #include<string>
 #include <stdint.h>
 #include <functional>
-#include "../Includes/WTSMarcos.h"
+#include "Includes/WTSMarcos.h"
 
 NS_WTP_BEGIN
 class WTSCommodityInfo;

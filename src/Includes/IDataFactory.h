@@ -9,7 +9,7 @@
  */
 #pragma once
 #include <stdint.h>
-#include "../Includes/WTSTypes.h"
+#include "Includes/WTSTypes.h"
 
 //USING_NS_WTP;
 

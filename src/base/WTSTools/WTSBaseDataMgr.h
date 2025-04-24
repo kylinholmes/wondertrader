@@ -8,9 +8,9 @@
  * \brief 基础数据管理器实现
  */
 #pragma once
-#include "../Includes/IBaseDataMgr.h"
-#include "../Includes/WTSCollection.hpp"
-#include "../Includes/FasterDefs.h"
+#include "Includes/IBaseDataMgr.h"
+#include "Includes/WTSCollection.hpp"
+#include "Includes/FasterDefs.h"
 
 USING_NS_WTP;
 
