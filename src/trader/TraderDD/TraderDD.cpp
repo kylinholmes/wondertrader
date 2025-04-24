@@ -55,11 +55,11 @@ void inst_hlp() {}
 
 #ifdef _WIN32
 #ifdef _WIN64
-#pragma comment(lib, "../API/FixApi/x64/fixapitool.lib")
-#pragma comment(lib, "../API/FixApi/x64/FixApi50.lib")	//64位的库
+#pragma comment(lib, "../../API/FixApi/x64/fixapitool.lib")
+#pragma comment(lib, "../../API/FixApi/x64/FixApi50.lib")	//64位的库
 #else
 #pragma message("x86 version")
-#pragma comment(lib, "../API/FixApi/x86/fixapi50_x86.lib")	//32位的库
+#pragma comment(lib, "../../API/FixApi/x86/fixapi50_x86.lib")	//32位的库
 #endif
 #include <wtypes.h>
 HMODULE	g_dllModule = NULL;

@@ -6,5 +6,6 @@ target("TraderDD")
     add_files("TraderDD.cpp")
 
     if is_plat("linux") then
-        add_links("FixApi/libfixapi.so")
+        add_linkdirs(path.join(os.projectdir(), "src/API/FixApi/linux"))
+        add_links("fixapi")
     end
