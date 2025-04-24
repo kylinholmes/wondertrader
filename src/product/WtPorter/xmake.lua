@@ -10,28 +10,28 @@ target("WtPorter")
     add_deps("WtCore", "WTSTools", "WTSUtils")
     add_packages("boost")
 
-    after_build(function (target)
-        os.mkdir(path.join(target:targetdir(), "parsers"))
-        os.mkdir(path.join(target:targetdir(), "traders"))
-        os.mkdir(path.join(target:targetdir(), "executer"))
+    -- after_build(function (target)
+    --     os.mkdir(path.join(target:targetdir(), "parsers"))
+    --     os.mkdir(path.join(target:targetdir(), "traders"))
+    --     os.mkdir(path.join(target:targetdir(), "executer"))
 
-        local modules = {
-            { "ParserUDP", "parsers" },
-            { "ParserShm", "parsers" },
-            { "TraderCTP", "traders" },
-            { "TraderXTP", "traders" },
-            { "TraderMocker", "traders" },
-            { "TraderCTPMini", "traders" },
-            { "TraderCTPOpt", "traders" },
-            { "TraderFemas", "traders" },
-            { "WtExeFact", "executer" },
-            { "WtDataStorage", "" },
-            { "WtDataStorageAD", "" },
-            { "WtRiskMonFact", "" },
-            { "WtMsgQue", "" }
-        }
+    --     local modules = {
+    --         { "ParserUDP", "parsers" },
+    --         { "ParserShm", "parsers" },
+    --         { "TraderCTP", "traders" },
+    --         { "TraderXTP", "traders" },
+    --         { "TraderMocker", "traders" },
+    --         { "TraderCTPMini", "traders" },
+    --         { "TraderCTPOpt", "traders" },
+    --         { "TraderFemas", "traders" },
+    --         { "WtExeFact", "executer" },
+    --         { "WtDataStorage", "" },
+    --         { "WtDataStorageAD", "" },
+    --         { "WtRiskMonFact", "" },
+    --         { "WtMsgQue", "" }
+    --     }
 
-        for _, mod in ipairs(modules) do
-            os.cp(path.join(target:targetdir(), mod[1]), path.join(target:targetdir(), mod[2]))
-        end
-    end)
+    --     for _, mod in ipairs(modules) do
+    --         os.cp(path.join(target:targetdir(), mod[1]), path.join(target:targetdir(), mod[2]))
+    --     end
+    -- end)
