@@ -28,7 +28,7 @@
 #define _SPK_SOCKET_BASE_DEFINE_H
 
 
-#include    <sutil/types.h>
+#include    "../types.h"
 
 
 #ifdef __cplusplus

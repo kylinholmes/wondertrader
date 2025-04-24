@@ -49,10 +49,10 @@
 #define _OES_QRY_PACKETS_OPTION_H
 
 
-#include    <oes_global/oes_base_model.h>
-#include    <oes_global/oes_base_model_option.h>
-#include    <oes_global/oes_qry_packets.h>
-#include    <sutil/net/spk_global_packet.h>
+#include    "./oes_base_model.h"
+#include    "./oes_base_model_option.h"
+#include    "./oes_qry_packets.h"
+#include    "../sutil/net/spk_global_packet.h"
 
 
 #ifdef __cplusplus

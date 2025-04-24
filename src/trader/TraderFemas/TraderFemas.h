@@ -228,7 +228,7 @@ protected:
 
 
 	boost::asio::io_context		m_asyncIO;
-	boost::asio::strand<boost::asio::io_context::executor_type>	m_strandIO;
+	boost::asio::strand<boost::asio::io_context::executor_type>*	m_strandIO;
 	StdThreadPtr				m_thrdWorker;
 
 	typedef std::queue<CommonExecuter>	QueryQue;

@@ -17,6 +17,7 @@
 #include "Includes/WTSVariant.hpp"
 
 #include "ModuleHelper.hpp"
+#include "boost/asio/post.hpp"
 
 #include <boost/filesystem.hpp>
 
@@ -309,8 +310,9 @@ void TraderOES::reconnect()
 	{
 		write_log(_sink, LL_WARN, "[TraderOES] Loading section {} from config failed", OESAPI_CFG_DEFAULT_KEY_ORD_ADDR);
 	}
-
-	_asyncio.post([this] {
+	boost::asio::post(
+		_asyncio,
+		[this] {
 		if (_sink)
 			_sink->handleEvent(WTE_Connect, 0);
 	});
@@ -322,7 +324,8 @@ void TraderOES::connect()
 
 	if (_thrd_worker == NULL)
 	{
-		boost::asio::io_context::work work(_asyncio);
+		// todo: maybe fault
+		// boost::asio::io_context::work work(_asyncio);
 		_thrd_worker.reset(new StdThread([this]() {
 			while (true)
 			{
@@ -475,7 +478,9 @@ int TraderOES::queryAccount()
 	}
 	else if (ret == 0)
 	{
-		_asyncio.post([this] {
+			boost::asio::post(
+		_asyncio,
+		[this] {
 			if (_sink)
 				_sink->onRspAccount(NULL);
 		});
@@ -497,7 +502,9 @@ int TraderOES::queryPositions()
 	}
 	else if (ret == 0)
 	{
-		_asyncio.post([this] {
+			boost::asio::post(
+		_asyncio,
+		[this] {
 			if (_sink)
 				_sink->onRspPosition(NULL);
 		});
@@ -519,7 +526,9 @@ int TraderOES::queryOrders()
 	}
 	else if(ret == 0)
 	{
-		_asyncio.post([this] {
+			boost::asio::post(
+		_asyncio,
+		[this] {
 			if (_sink)
 				_sink->onRspOrders(NULL);
 		});
@@ -541,7 +550,9 @@ int TraderOES::queryTrades()
 	}
 	else if (ret == 0)
 	{
-		_asyncio.post([this] {
+			boost::asio::post(
+		_asyncio,
+		[this] {
 			if (_sink)
 				_sink->onRspTrades(NULL);
 		});
@@ -580,7 +591,9 @@ void TraderOES::handle_ord_connected(OesAsyncApiChannelT *pAsyncChannel)
 		});
 	}
 
-	_asyncio.post([this] {
+		boost::asio::post(
+		_asyncio,
+		[this] {
 		_tradingday = OesAsyncApi_GetTradingDay(_channel);
 		if (_sink)
 			_sink->onLoginResult(true, "", _tradingday);
@@ -898,7 +911,9 @@ void TraderOES::handle_rsp_account(SMsgHeadT *pMsgHead, void *pMsgItem, OesQryCu
 
 	if (pQryCursor == NULL || pQryCursor->isEnd)
 	{
-		_asyncio.post([this] {
+			boost::asio::post(
+		_asyncio,
+		[this] {
 			if (_sink)
 				_sink->onRspAccount(_funds);
 
@@ -922,7 +937,9 @@ void TraderOES::handle_rsp_orders(SMsgHeadT *pMsgHead, void *pMsgItem, OesQryCur
 
 	if (pQryCursor == NULL || pQryCursor->isEnd)
 	{
-		_asyncio.post([this] {
+			boost::asio::post(
+		_asyncio,
+		[this] {
 			if (_sink)
 				_sink->onRspOrders(_orders);
 
@@ -967,7 +984,9 @@ void TraderOES::handle_rsp_positions(SMsgHeadT *pMsgHead, void *pMsgItem, OesQry
 
 	if (pQryCursor == NULL || pQryCursor->isEnd)
 	{
-		_asyncio.post([this] {
+			boost::asio::post(
+		_asyncio,
+		[this] {
 			if (_sink)
 				_sink->onRspPosition(_positions);
 
@@ -992,7 +1011,9 @@ void TraderOES::handle_rsp_trades(SMsgHeadT *pMsgHead, void *pMsgItem, OesQryCur
 
 	if(pQryCursor == NULL || pQryCursor->isEnd)
 	{
-		_asyncio.post([this] {
+			boost::asio::post(
+		_asyncio,
+		[this] {
 			if (_sink)
 				_sink->onRspTrades(_trades);
 

@@ -11,6 +11,7 @@
 #include "StdUtils.hpp"
 #include "DLLHelper.hpp"
 #include "WtKVCache.hpp"
+#include "boost/asio/executor_work_guard.hpp"
 
 
 USING_NS_WTP;
@@ -231,7 +232,7 @@ private:
 
 	boost::asio::io_context		_asyncio;
 	StdThreadPtr				_thrd_worker;
-	typedef std::shared_ptr<boost::asio::io_context::work> BoostWorkerPtr;
+	typedef std::shared_ptr<boost::asio::executor_work_guard<boost::asio::io_context::executor_type>> BoostWorkerPtr;
 	BoostWorkerPtr				_worker;
 
 	DllHandle		m_hInstXTP;

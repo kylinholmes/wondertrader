@@ -13,7 +13,7 @@ add_requires(
 )
 add_packages("boost", "spdlog", "rapidjson", "nanomsg", "nlopt", "fmt")
 add_cxflags("-Wno-deprecated-declarations")
-add_includedirs("Includes","./","base/include","API/*/include", {public = true})
+add_includedirs("Includes","./","base/include", {public = true})
 
 
 
@@ -56,13 +56,10 @@ includes(
     -- "TraderDumper", "TraderCTP", "TraderCTPMini", 
     "UltraFT",
     -- "WtUftCore", "WtUftStraFact", "WtUftRunner",
+    "tools",
+    -- "CTPLoader", "CTPOptLoader", "LoaderRunner", "WtMsgQue", 
 
-    
-
-    "CTPLoader", "CTPOptLoader", "LoaderRunner", 
-        "WtShareHelper", 
-        "WtMsgQue", 
-         "WtLatencyHFT", "WtLatencyUFT"
-    --  ,"TestBtPorter", "TestDtPorter", 
-    --  "TestExecPorter", "TestPorter", "TestTrader", "TestParser", "TestUnits"
-    )
+    -- Unkown rightnow, readme no mention
+    "WtShareHelper", 
+    "WtLatencyHFT", "WtLatencyUFT"
+)

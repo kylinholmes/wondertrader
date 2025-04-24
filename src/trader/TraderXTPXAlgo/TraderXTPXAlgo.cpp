@@ -24,6 +24,8 @@
 //#pragma comment(lib, "../API/XTPXAlgo/x64/xtptraderapi_xalgo.lib")
 
  //By Wesley @ 2022.01.05
+#include "boost/asio/io_context.hpp"
+#include "boost/asio/post.hpp"
 #include "fmtlib.h"
 template<typename... Args>
 inline void write_log(ITraderSpi* sink, WTSLogLevel ll, const char* format, const Args&... args)
@@ -181,6 +183,8 @@ TraderXTPXAlgo::TraderXTPXAlgo()
 	, _bd_mgr(NULL)
 	, _tradingday(0)
 	, _inited(false)
+	, _asyncio()
+	, _worker(nullptr)
 {
 
 }
@@ -392,7 +396,9 @@ void TraderXTPXAlgo::OnDisconnected(uint64_t session_id, int reason)
 	if (_sink)
 		_sink->handleEvent(WTE_Close, reason);
 
-	_asyncio.post([this]() {
+	boost::asio::post(
+		_asyncio,
+	[this]() {
 		write_log(_sink, LL_WARN, "[TraderXTPXAlgo] Connection lost, relogin in 2 seconds...");
 		std::this_thread::sleep_for(std::chrono::seconds(2));
 		doLogin();  // 登录
@@ -531,7 +537,7 @@ void TraderXTPXAlgo::OnQueryPosition(XTPQueryStkPositionRsp *position, XTPRI *er
 		if (contract)
 		{
 			WTSCommodityInfo* commInfo = contract->getCommInfo();
-			std::string key = fmt::format("{}-{}", code.c_str(), position->position_direction);
+			std::string key = fmt::format("{}-{}", code.c_str(), static_cast<int>(position->position_direction));
 			WTSPositionItem* pos = (WTSPositionItem*)_positions->get(key);
 			if (pos == NULL)
 			{
@@ -910,7 +916,7 @@ void TraderXTPXAlgo::connect()
 
 	if (_thrd_worker == NULL)
 	{
-		_worker.reset(new boost::asio::io_context::work(_asyncio));
+		_worker.reset(new boost::asio::executor_work_guard<boost::asio::io_context::executor_type>(_asyncio.get_executor()));
 		_thrd_worker.reset(new StdThread([this]() {
 			while (true)
 			{
@@ -981,9 +987,11 @@ void TraderXTPXAlgo::doLogin()
 		write_log(_sink, LL_ERROR, "[TraderXTPXAlgo] Login to OMS failed: {}", error_info->error_msg);
 		std::string msg = error_info->error_msg;
 		_state = TS_LOGINFAILED;
-		_asyncio.post([this, msg] {
-			_sink->onLoginResult(false, msg.c_str(), 0);
-		});
+		boost::asio::post(
+			_asyncio,
+			[this, msg] {
+				_sink->onLoginResult(false, msg.c_str(), 0);
+			});
 	}
 	else
 	{
@@ -1022,7 +1030,9 @@ void TraderXTPXAlgo::doLogin()
 
 			_state = TS_LOGINED;
 			_inited = true;
-			_asyncio.post([this] {
+			boost::asio::post(
+			_asyncio,
+			[this] {
 				_sink->onLoginResult(true, 0, _tradingday);
 				_state = TS_ALLREADY;
 			});
@@ -1045,7 +1055,9 @@ void TraderXTPXAlgo::doLogin()
 		write_log(_sink, LL_ERROR, "[TraderXTPXAlgo] Login AlgoBus failed: {}", error_info->error_msg);
 		std::string msg = error_info->error_msg;
 		_state = TS_LOGINFAILED;
-		_asyncio.post([this, msg] {
+		boost::asio::post(
+			_asyncio,
+			[this, msg] {
 			_sink->onLoginResult(false, msg.c_str(), 0);
 		});
 	}
@@ -1086,7 +1098,9 @@ void TraderXTPXAlgo::doLogin()
 
 			_state = TS_LOGINED;
 			_inited = true;
-			_asyncio.post([this] {
+			boost::asio::post(
+			_asyncio,
+			[this] {
 				_sink->onLoginResult(true, 0, _tradingday);
 				_state = TS_ALLREADY;
 			});
@@ -1111,7 +1125,9 @@ void TraderXTPXAlgo::doLogin()
 				write_log(_sink, LL_ERROR, "[TraderXTPXAlgo] Establish channel send error: {}", error_info->error_msg);
 				std::string msg = error_info->error_msg;
 				_state = TS_LOGINFAILED;
-				_asyncio.post([this, msg] {
+				boost::asio::post(
+			_asyncio,
+			[this, msg] {
 					_sink->onLoginResult(false, msg.c_str(), 0);
 				});
 			}

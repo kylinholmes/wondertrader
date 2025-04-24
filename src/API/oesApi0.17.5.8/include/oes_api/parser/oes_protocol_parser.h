@@ -28,8 +28,8 @@
 #define _OES_PROTOCOL_PARSER_H
 
 
-#include    <oes_global/oes_packets.h>
-#include    <sutil/net/spk_global_packet.h>
+#include    "../../oes_global/oes_packets.h"
+#include    "../../sutil/net/spk_global_packet.h"
 
 
 #ifdef __cplusplus

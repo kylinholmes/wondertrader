@@ -28,7 +28,7 @@
 #define _SPK_DATA_BUFFER_DEFINE_H
 
 
-#include    <sutil/types.h>
+#include    "../types.h"
 
 
 #ifdef __cplusplus

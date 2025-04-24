@@ -77,7 +77,7 @@
 
 
 #include    "mds_api.h"
-#include    <sutil/net/spk_general_endpoint_define.h>
+#include    "../sutil/net/spk_general_endpoint_define.h"
 
 
 #ifdef __cplusplus

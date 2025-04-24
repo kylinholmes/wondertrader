@@ -1,6 +1,6 @@
 includes(
     "CTPLoader",
     "CTPOptLoader",
-    "LoaderRunner"
-    "WtMsgQue",
+    "LoaderRunner",
+    "WtMsgQue"
 )

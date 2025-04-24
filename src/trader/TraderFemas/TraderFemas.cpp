@@ -83,7 +83,7 @@ TraderFemas::TraderFemas()
 	, m_uLocalOrdID(1)
 	, m_bInQuery(false)
 	, m_asyncIO()
-	, m_strandIO(m_asyncIO.get_executor())
+	, m_strandIO(nullptr)
 	, m_lastQryTime(0)
 {
 }
@@ -199,6 +199,7 @@ void TraderFemas::connect()
 
 	if (m_thrdWorker == NULL)
 	{
+		m_strandIO = new boost::asio::strand<boost::asio::io_context::executor_type>(m_asyncIO.get_executor());
 		// todo: maybe fault
 		// boost::asio::io_context::work work(m_asyncIO);
 		m_thrdWorker.reset(new StdThread([this](){
@@ -220,6 +221,16 @@ void TraderFemas::disconnect()
 			release();
 		}
 	);
+	
+	if (m_thrdWorker)
+	{
+		m_asyncIO.stop();
+		m_thrdWorker->join();
+		m_thrdWorker = NULL;
+
+		delete m_strandIO;
+		m_strandIO = nullptr;
+	}
 }
 
 bool TraderFemas::makeEntrustID(char* buffer, int length)
@@ -1155,7 +1166,7 @@ const char* TraderFemas::wrapExchg(const char* exchg)
 void TraderFemas::triggerQuery()
 {
 	boost::asio::post(
-		m_strandIO,
+		*m_strandIO,
 		[this](){
 		if (m_queQuery.empty() || m_bInQuery)
 			return;
@@ -1165,7 +1176,7 @@ void TraderFemas::triggerQuery()
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			boost::asio::post(
-				m_strandIO,
+				*m_strandIO,
 				[this](){
 					triggerQuery();
 			});

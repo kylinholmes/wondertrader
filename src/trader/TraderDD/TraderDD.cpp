@@ -23,6 +23,7 @@
 #include "TimeUtils.hpp"
 #include "Includes/IBaseDataMgr.h"
 #include "DLLHelper.hpp"
+#include "boost/asio/post.hpp"
 #include "decimal.h"
 #include "StrUtil.hpp"
 
@@ -121,7 +122,7 @@ std::string getBinDir()
 		_bin_dir = getInstPath();
 #endif
 		boost::filesystem::path p(_bin_dir);
-		_bin_dir = p.branch_path().string() + "/";
+		_bin_dir = p.parent_path().string() + "/";
 	}
 
 	return _bin_dir;
@@ -328,7 +329,8 @@ TraderDD::TraderDD()
 	, m_wrapperState(WS_NOTLOGIN)
 	, m_uLastQryTime(0)
 	, m_bInQuery(false)
-	, m_strandIO(NULL)
+	, m_asyncIO()
+	, m_strandIO(nullptr)
 	, m_lastQryTime(0)
 	, m_orderRef(1)
 	, m_lDate(0)
@@ -473,8 +475,8 @@ void TraderDD::connect()
 {
 	if (m_thrdWorker == NULL)
 	{
-		m_strandIO = new boost::asio::io_context::strand(m_asyncIO);
-		boost::asio::io_context::work work(m_asyncIO);
+		m_strandIO = new boost::asio::strand<boost::asio::io_context::executor_type>(m_asyncIO.get_executor());
+		// boost::asio::io_context::work work(m_asyncIO);
 		m_thrdWorker.reset(new StdThread([this]() {
 			while (true)
 			{
@@ -489,7 +491,9 @@ void TraderDD::connect()
 
 void TraderDD::disconnect()
 {
-	m_asyncIO.post([this](){
+	boost::asio::post(
+		m_asyncIO,
+		[this](){
 		release();
 	});
 
@@ -500,7 +504,7 @@ void TraderDD::disconnect()
 		m_thrdWorker = NULL;
 
 		delete m_strandIO;
-		m_strandIO = NULL;
+		m_strandIO = nullptr;
 	}
 }
 
@@ -553,7 +557,9 @@ int TraderDD::login(const char* user, const char* pass, const char* productInfo)
 
 void TraderDD::qryGDNo()
 {
-	m_strandIO->post([this]() {
+	boost::asio::post(
+		*m_strandIO,
+		[this]() {
 
 		HANDLE_SESSION sess = Fix_AllocateSession(m_hConn);
 		Fix_SetNode(sess, m_strNode.c_str());
@@ -607,7 +613,9 @@ void TraderDD::qryGDNo()
 
 void TraderDD::qryZJZH()
 {
-	m_strandIO->post([this]() {
+	boost::asio::post(
+		*m_strandIO,
+		[this]() {
 
 		HANDLE_SESSION sess = Fix_AllocateSession(m_hConn);
 		Fix_SetNode(sess, m_strNode.c_str());
@@ -648,7 +656,9 @@ void TraderDD::qryZJZH()
 
 void TraderDD::doLogin()
 {
-	m_strandIO->post([this]() {
+	boost::asio::post(
+		*m_strandIO,
+		[this]() {
 
 		HANDLE_SESSION sess = Fix_AllocateSession(m_hConn);
 		Fix_SetNode(sess, m_strNode.c_str());
@@ -812,7 +822,9 @@ int TraderDD::orderInsert(WTSEntrust* entrust)
 	}
 
 	entrust->retain();
-	m_strandIO->post([this, entrust]() {
+	boost::asio::post(
+		*m_strandIO,
+		[this, entrust]() {
 
 		HANDLE_SESSION sess = Fix_AllocateSession(m_hConn);
 		Fix_SetNode(sess, m_strNode.c_str());
@@ -898,7 +910,9 @@ int TraderDD::orderAction(WTSEntrustAction* action)
 		return -1;
 
 	action->retain();
-	m_strandIO->post([this, action]() {
+	boost::asio::post(
+		*m_strandIO,
+		[this, action]() {
 		write_log(m_traderSink, LL_INFO, "[TraderDD] 调用撤单接口 ..."）;
 
 		HANDLE_SESSION sess = Fix_AllocateSession(m_hConn);
@@ -1591,7 +1605,9 @@ bool TraderDD::isConnected()
 }
 void TraderDD::triggerQuery()
 {
-	m_strandIO->post([this](){
+	boost::asio::post(
+		*m_strandIO,
+		[this](){
 		if (m_queQuery.empty() || m_bInQuery)
 			return;
 
@@ -1600,7 +1616,9 @@ void TraderDD::triggerQuery()
 		//if (curTime - m_lastQryTime < 1000)
 		//{
 		//	boost::this_thread::sleep(boost::posix_time::milliseconds(50));
-		//	m_strandIO->post([this](){
+		//	boost::asio::post(
+		// *m_strandIO,
+		// [this](){
 		//		triggerQuery();
 		//	});
 		//	return;

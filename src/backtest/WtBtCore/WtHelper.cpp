@@ -9,7 +9,7 @@
  */
 #include "WtHelper.h"
 
-#include "base/include/StdUtils.hpp"
+#include "base/include/StrUtil.hpp"
 #include <boost/filesystem.hpp>
 
 #ifdef _MSC_VER

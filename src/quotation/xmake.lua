@@ -3,7 +3,7 @@
 includes(
     "ParserCTP",
     "ParserCTPOpt",
-    "ParserHuaX",
+    -- "ParserHuaX",
     "ParserShm",
     "ParserXeleSkt",
     "ParserYD",

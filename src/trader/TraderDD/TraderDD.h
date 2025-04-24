@@ -144,7 +144,7 @@ protected:
 	uint64_t			m_lastQryTime;
 
 	boost::asio::io_context		m_asyncIO;
-	boost::asio::io_context::strand*	m_strandIO;
+	boost::asio::strand<boost::asio::io_context::executor_type>*	m_strandIO;
 	StdThreadPtr		m_thrdWorker;
 
 	std::string		m_strModule;
