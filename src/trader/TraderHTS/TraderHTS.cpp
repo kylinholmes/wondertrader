@@ -115,7 +115,7 @@ std::string getBinDir()
 		_bin_dir = getInstPath();
 #endif
 		boost::filesystem::path p(_bin_dir);
-		_bin_dir = p.branch_path().string() + "/";
+		_bin_dir = p.parent_path().string() + "/";
 	}
 
 	return _bin_dir;
@@ -360,7 +360,9 @@ void TraderHTS::connect()
 
 void TraderHTS::disconnect()
 {
-	m_asyncIO.post([this]() {
+	boost::asio::post(
+		m_asyncIO,
+		[this]() {
 		release();
 	});
 
@@ -1400,8 +1402,8 @@ void TraderHTS::triggerQuery()
 		//{
 		//	boost::this_thread::sleep(boost::posix_time::milliseconds(50));
 		//	boost::asio::post(
-		*m_strandIO,
-	[this](){
+		//	*m_strandIO,
+		//  [this](){
 		//		triggerQuery();
 		//	});
 		//	return;
