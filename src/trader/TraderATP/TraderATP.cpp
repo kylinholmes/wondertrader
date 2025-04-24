@@ -1047,7 +1047,8 @@ void TraderATP::connect()
 
 	if (_thrd_worker == NULL)
 	{
-		static boost::asio::io_service::work work(_asyncio);
+		// todo: 这里需要使用boost::asio::io_service::work来保持线程不退出
+		// static boost::asio::io_service::work work(_asyncio);
 		_thrd_worker.reset(new StdThread([this]() {
 			while (true)
 			{
