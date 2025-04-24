@@ -8,15 +8,15 @@
  * /brief 
  */
 #pragma once
-#include "../WtCore/WtHftEngine.h"
-#include "../WtCore/HftStrategyMgr.h"
-#include "../WtCore/TraderAdapter.h"
-#include "../WtCore/ParserAdapter.h"
-#include "../WtCore/ActionPolicyMgr.h"
-#include "../WtCore/WtDtMgr.h"
+#include "product/WtCore/WtHftEngine.h"
+#include "product/WtCore/HftStrategyMgr.h"
+#include "product/WtCore/TraderAdapter.h"
+#include "product/WtCore/ParserAdapter.h"
+#include "product/WtCore/ActionPolicyMgr.h"
+#include "product/WtCore/WtDtMgr.h"
 
-#include "../WTSTools/WTSBaseDataMgr.h"
-#include "../WTSTools/WTSHotMgr.h"
+#include "base/WTSTools/WTSBaseDataMgr.h"
+#include "base/WTSTools/WTSHotMgr.h"
 
 
 NS_WTP_BEGIN

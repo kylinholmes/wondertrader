@@ -28,8 +28,8 @@
 #define _SPK_GENERAL_ENDPOINT_DEFINE_H
 
 
-#include    <sutil/net/spk_general_client_define.h>
-#include    <sutil/platform/spk_platforms.h>
+#include    "./spk_general_client_define.h"
+#include    "../platform/spk_platforms.h"
 
 
 #ifdef __cplusplus

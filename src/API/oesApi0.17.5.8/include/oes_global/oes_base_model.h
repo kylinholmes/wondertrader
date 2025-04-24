@@ -421,10 +421,10 @@
 #define _OES_BASE_MODEL_H
 
 
-#include    <oes_global/oes_base_constants.h>
-#include    <oes_global/oes_base_model_credit.h>
-#include    <oes_global/oes_base_model_option.h>
-#include    <sutil/types.h>
+#include    "./oes_base_constants.h"
+#include    "./oes_base_model_credit.h"
+#include    "./oes_base_model_option.h"
+#include    "../sutil/types.h"
 
 
 #ifdef __cplusplus

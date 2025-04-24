@@ -77,8 +77,8 @@
 #define _OES_BASE_MODEL_CREDIT_H
 
 
-#include    <oes_global/oes_base_constants.h>
-#include    <sutil/types.h>
+#include    "./oes_base_constants.h"
+#include    "../sutil/types.h"
 
 
 #ifdef __cplusplus

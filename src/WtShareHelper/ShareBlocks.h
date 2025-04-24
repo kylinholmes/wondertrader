@@ -2,8 +2,8 @@
 #include <stdint.h>
 #include <memory>
 
-#include "../Share/BoostMappingFile.hpp"
-#include "../Includes/FasterDefs.h"
+#include "BoostMappingFile.hpp"
+#include "Includes/FasterDefs.h"
 
 USING_NS_WTP;
 

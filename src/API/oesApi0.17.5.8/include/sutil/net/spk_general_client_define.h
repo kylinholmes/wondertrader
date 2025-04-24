@@ -28,9 +28,9 @@
 #define _SPK_GENERAL_CLIENT_ENV_DEFINE_H
 
 
-#include    <sutil/net/spk_global_packet.h>
-#include    <sutil/net/spk_data_buffer_define.h>
-#include    <sutil/net/spk_socket_base_define.h>
+#include    "./spk_global_packet.h"
+#include    "./spk_data_buffer_define.h"
+#include    "./spk_socket_base_define.h"
 
 
 #ifdef __cplusplus

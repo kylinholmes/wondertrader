@@ -10,7 +10,7 @@
 #pragma once
 #include <string>
 
-#include "../Includes/WTSTypes.h"
+#include "Includes/WTSTypes.h"
 
 NS_WTP_BEGIN
 class WTSVariant;

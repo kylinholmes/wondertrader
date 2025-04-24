@@ -8,19 +8,19 @@
  * /brief 
  */
 #include "UftLatencyTool.h"
-#include "../WtUftCore/UftStraContext.h"
+#include "UltraFT/WtUftCore/UftStraContext.h"
 
-#include "../Includes/WTSVariant.hpp"
-#include "../Includes/IParserApi.h"
-#include "../Includes/ITraderApi.h"
-#include "../Includes/WTSContractInfo.hpp"
+#include "Includes/WTSVariant.hpp"
+#include "Includes/IParserApi.h"
+#include "Includes/ITraderApi.h"
+#include "Includes/WTSContractInfo.hpp"
 
-#include "../WTSTools/WTSLogger.h"
-#include "../WTSUtils/WTSCfgLoader.h"
+#include "base/WTSTools/WTSLogger.h"
+#include "base/WTSUtils/WTSCfgLoader.h"
 
-#include "../Share/StrUtil.hpp"
-#include "../Share/TimeUtils.hpp"
-#include "../Share/CpuHelper.hpp"
+#include "StrUtil.hpp"
+#include "TimeUtils.hpp"
+#include "CpuHelper.hpp"
 
 
 USING_NS_WTP;
@@ -189,12 +189,12 @@ namespace uft
 		/*
 		*	执行单元名称
 		*/
-		virtual const char* getName() { return "TestStrategy"; }
+		virtual const char* getName() override { return "TestStrategy"; }
 
 		/*
 		*	所属执行器工厂名称
 		*/
-		virtual const char* getFactName() { return "TestStrategyFact"; }
+		virtual const char* getFactName() override { return "TestStrategyFact"; }
 
 
 		virtual void on_init(IUftStraCtx* ctx) override
@@ -202,7 +202,7 @@ namespace uft
 			ctx->stra_sub_ticks("SHFE.rb2205");
 		}
 
-		virtual void on_tick(IUftStraCtx* ctx, const char* code, WTSTickData* newTick)
+		virtual void on_tick(IUftStraCtx* ctx, const char* code, WTSTickData* newTick) override
 		{
 			//WTSLogger::debug("{}", __FUNCTION__);
 			ctx->stra_enter_long("SHFE.rb2205", 2300, 1, 0);

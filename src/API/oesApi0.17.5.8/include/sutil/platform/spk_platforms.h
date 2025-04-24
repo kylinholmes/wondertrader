@@ -28,7 +28,7 @@
 #define _SPK_PLATFORMS_H
 
 
-#include    <sutil/types.h>
+#include    "../types.h"
 
 
 /* ===================================================================

@@ -1,7 +1,7 @@
 ﻿#include "ShareBlocks.h"
-#include "../Share/BoostFile.hpp"
-#include "../Share/TimeUtils.hpp"
-#include "../Share/StdUtils.hpp"
+#include "BoostFile.hpp"
+#include "TimeUtils.hpp"
+#include "StdUtils.hpp"
 
 using namespace shareblock;
 

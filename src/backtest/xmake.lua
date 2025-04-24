@@ -1,0 +1,5 @@
+includes(
+    "WtBtCore",
+    "WtBtPorter",
+    "WtBtRunner"
+)

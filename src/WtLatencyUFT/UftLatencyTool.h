@@ -8,12 +8,12 @@
  * /brief 
  */
 #pragma once
-#include "../WtUftCore/WtUftEngine.h"
-#include "../WtUftCore/UftStrategyMgr.h"
-#include "../WtUftCore/TraderAdapter.h"
-#include "../WtUftCore/ParserAdapter.h"
+#include "UltraFT/WtUftCore/WtUftEngine.h"
+#include "UltraFT/WtUftCore/UftStrategyMgr.h"
+#include "UltraFT/WtUftCore/TraderAdapter.h"
+#include "UltraFT/WtUftCore/ParserAdapter.h"
 
-#include "../WTSTools/WTSBaseDataMgr.h"
+#include "base/WTSTools/WTSBaseDataMgr.h"
 
 NS_WTP_BEGIN
 class WTSVariant;

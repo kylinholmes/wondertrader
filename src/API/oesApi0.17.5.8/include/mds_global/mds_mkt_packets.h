@@ -96,9 +96,9 @@
 #define _MDS_MKT_PACKETS_H
 
 
-#include    <mds_global/mds_base_model.h>
-#include    <mds_global/mds_qry_packets.h>
-#include    <sutil/net/spk_global_packet.h>
+#include    "../mds_global/mds_base_model.h"
+#include    "../mds_global/mds_qry_packets.h"
+#include    "../sutil/net/spk_global_packet.h"
 
 
 #ifdef __cplusplus

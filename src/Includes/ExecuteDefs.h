@@ -8,8 +8,8 @@
  * \brief 
  */
 #pragma once
-#include "../Includes/WTSDataDef.hpp"
-#include "../Includes/WTSCollection.hpp"
+#include "Includes/WTSDataDef.hpp"
+#include "Includes/WTSCollection.hpp"
 
 NS_WTP_BEGIN
 class WTSTickData;

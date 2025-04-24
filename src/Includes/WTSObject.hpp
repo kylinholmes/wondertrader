@@ -13,8 +13,8 @@
 #include <boost/smart_ptr/detail/spinlock.hpp>
 
 #include "WTSMarcos.h"
-#include "../Share/ObjectPool.hpp"
-#include "../Share/SpinMutex.hpp"
+#include "ObjectPool.hpp"
+#include "SpinMutex.hpp"
 
 NS_WTP_BEGIN
 class WTSObject
