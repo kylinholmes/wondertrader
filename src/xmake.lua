@@ -53,11 +53,11 @@ includes(
     --  "WtCore", "WtPorter", "WtExecMon", "WtRunner", 
     "trader",
     -- "TraderCTPOpt", "TraderFemas", "TraderMocker", "TraderXTP", "TraderYD", 
-    -- "TraderDumper", "TraderCTP", "TraderCTPMini", 
+    -- "TraderCTP", "TraderCTPMini", 
     "UltraFT",
     -- "WtUftCore", "WtUftStraFact", "WtUftRunner",
     "tools",
-    -- "CTPLoader", "CTPOptLoader", "LoaderRunner", "WtMsgQue", 
+    -- "CTPLoader", "CTPOptLoader", "LoaderRunner", "WtMsgQue", "TradeDumper",
 
     -- Unkown rightnow, readme no mention
     "WtShareHelper", 
